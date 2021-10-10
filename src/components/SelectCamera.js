@@ -76,6 +76,11 @@ const WebcamCapture = () => {
 
   };
 
+  const cambiarCamara = () => {
+    setDisplay(true)
+    setRecomendations(false)
+  }
+
   const handleDevices = useCallback(
     mediaDevices =>
       setDevices(mediaDevices.filter(({ kind }) => kind === "videoinput")),
@@ -121,7 +126,7 @@ const WebcamCapture = () => {
       screenshotFormat="image/jpeg" 
       />
       <Button onClick={capturePhoto}>Capture</Button>
-      <Button onClick={() => setUrl(null)}>Cambiar camara</Button>
+      <Button onClick={cambiarCamara}>Cambiar camara</Button>
       <ul>
       {
       devices.map((device, key) => (
