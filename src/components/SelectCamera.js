@@ -155,7 +155,7 @@ const WebcamCapture = () => {
         <p>{modaltitle}</p>
           {url && (
             <div>
-              <img src={url} alt="Screenshot" style={{WebkitTransform:'rotate(90deg)', padding:'10px'}} width={200}/>
+              <img src={url} alt="Screenshot" style={{WebkitTransform:'rotate(180deg)', padding:'10px'}} width={200}/>
             </div>
           )}
       </Modal>
