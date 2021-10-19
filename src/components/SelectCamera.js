@@ -18,6 +18,7 @@ const WebcamCapture = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [reedirect, setReedirect] = useState(false);
   const [spin, setSpin] = useState(false);
+  const [isPc, setIsPc] = useState(false);
   const webcamRef = useRef(null);
   const [modaltitle, setModaltitle] = useState("Camara no disponible");
   const [url, setUrl] = useState(null);
@@ -31,7 +32,7 @@ const WebcamCapture = () => {
     const imageSrc = webcamRef.current.getScreenshot();
     setUrl(imageSrc);
     setTitulo("Imagen capturada");
-    setModaltitle("Enviar data a TOC?");
+    setModaltitle("¿Enviar data a TOC?");
     setIsModalVisible(true);
   }, [webcamRef]);
 
@@ -88,6 +89,9 @@ const WebcamCapture = () => {
   );
   useEffect(
     () => {
+      /* if (os === "Mac OS" || "Windows") {
+        setIsPc(true)
+      } */
       navigator.mediaDevices.enumerateDevices().then(handleDevices);
     },
     [handleDevices]
@@ -102,16 +106,20 @@ const WebcamCapture = () => {
 
   return (
     <>
+      {isPc && (
+          <Redirect to="/migration" />
+        )
+      }
       <Spin spinning={spin} tip="Enviando data..." >
-      <Tooltip placement="topLeft" title={camera}>
-      <Select onChange={handleOnChange} defaultValue="Selecciona la camara" style={{width:200}}>
+      <Tooltip placement="right" title={camera}>
+      <Select hidden={recomendations} onChange={handleOnChange}  defaultValue="Selecciona la camara" style={{width:200, textAlign:'center'}}>
       {devices.map((device, key) => (
               <Option value={device.deviceId} key={device.label}>{device.label}</Option>
             ))}
       </Select>
       </Tooltip>
       <div style={{paddingTop:'10px'}} hidden={recomendations}>
-      <p>Recuerda seguir las siguientes instrucciones para una captura adecuada:</p>
+      <p style={{padding:'9px'}} >Recuerda seguir las siguientes instrucciones para una captura adecuada:</p>
       <Recomendations/>
       {camera && (<Col>la camara seleccionada es: {camera}</Col>)}
       </div>
@@ -130,7 +138,7 @@ const WebcamCapture = () => {
       <ul>
       {
       devices.map((device, key) => (
-              (camera == device.label ? color = "blue" : color="white"),
+              (camera == device.label ? color = "blue" : color="red"),
               <li value={device.deviceId} style={{color: color}} key={device.label}>{device.label}</li>
             ))}
       </ul>
@@ -138,7 +146,7 @@ const WebcamCapture = () => {
       <div style={{paddingTop:'10px'}}>
       {( camera === "sin camara seleccionada" ? <div></div> : <Button onClick={onClickHidden} hidden={recomendations}>capturar cedula</Button>)}
       </div>
-      <Modal title={titulo} visible={isModalVisible} onOk={onClickModal} onCancel={handleOkandCancel}>
+      <Modal title={titulo} visible={isModalVisible} style={{textAlign:'center'}} onOk={onClickModal} onCancel={handleOkandCancel}>
         <p>{modaltitle}</p>
           {url && (
             <div>

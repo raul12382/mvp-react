@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react'
-import {Table, Space, Button} from 'antd'
+import {Table, Space, Button, Select} from 'antd'
 import axios from 'axios';
 import Item from 'antd/lib/list/Item';
 
@@ -15,8 +15,8 @@ const GetDispositivos = () => {
     console.log(dispositivos)
   }, [])
 
-  const Image = (value) => {
-    console.log(value)
+  const Image = () => {
+    console.log()
   }
     
   return (
@@ -30,11 +30,13 @@ const GetDispositivos = () => {
           value="_id"
           render={(text, record) => (
             <Space size="middle">
-              <Button onClick={Image()} >Ver Imagen</Button>
+              <Button onClick={Image(record, text)} >Ver Imagen</Button>
             </Space>
           )}
         />
       </Table>
+
+      
 
     </>
   );

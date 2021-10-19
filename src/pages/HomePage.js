@@ -1,7 +1,7 @@
 import "../index.css";
 import data from "../components/Data";
 import { useState, useEffect } from "react";
-import { Button } from "antd";
+import { Button, Image } from "antd";
 import {NavLink} from 'react-router-dom'
 import {RightCircleOutlined, LeftCircleOutlined} from '@ant-design/icons'
 
