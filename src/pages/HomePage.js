@@ -20,6 +20,13 @@ export default function Homepage() {
   }, [index, people]);
 
   return (
+    <>
+    <h2 style={{color:'#00AFDC'}}>
+      Bienvenido al MVP de TOC
+    </h2>
+    <label style={{paddingLeft:'10px', }}>
+      Realiza la captura de tu cedula en unos simples pasos
+    </label>
     <section className="section" >
       <div className="section-center">
         {people.map((person, personIndex) => {
@@ -45,7 +52,7 @@ export default function Homepage() {
               <p style={{backgroundColor:'gray', textAlign:'center'}}>{name}</p>
               <p className="title">{title}</p>
               <p className="text">{quote}</p>
-              <img src={image} alt={name} className="person-img" />
+              <Image src={image} alt={name} className="person-img" />
               {index == 2 ? 
               <div style={{padding:'7px'}}>
                   <NavLink to="/select_camera">
@@ -65,5 +72,6 @@ export default function Homepage() {
         </button>
       </div>
     </section>
+    </>
   );
 }

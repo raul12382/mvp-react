@@ -111,6 +111,11 @@ const WebcamCapture = () => {
         )
       }
       <Spin spinning={spin} tip="Enviando data..." >
+      <div style={{ paddingBottom:'10px'}} hidden={recomendations}>
+        <label style={{color:'#00AFDC'}}>
+          Seleccione la mejor camara para Autocaptura
+        </label>
+      </div>
       <Tooltip placement="right" title={camera}>
       <Select hidden={recomendations} onChange={handleOnChange}  defaultValue="Selecciona la camara" style={{width:200, textAlign:'center'}}>
       {devices.map((device, key) => (
@@ -119,7 +124,7 @@ const WebcamCapture = () => {
       </Select>
       </Tooltip>
       <div style={{paddingTop:'10px'}} hidden={recomendations}>
-      <p style={{padding:'9px'}} >Recuerda seguir las siguientes instrucciones para una captura adecuada:</p>
+      <p style={{padding:'5px'}} >Recuerda seguir las siguientes instrucciones para una captura adecuada:</p>
       <Recomendations/>
       {camera && (<Col>la camara seleccionada es: {camera}</Col>)}
       </div>
@@ -134,23 +139,23 @@ const WebcamCapture = () => {
       screenshotFormat="image/jpeg" 
       />
       <Button onClick={capturePhoto}>Capture</Button>
-      <Button onClick={cambiarCamara}>Cambiar camara</Button>
+      <Button style={{backgroundColor:'#00AFDC', color:'white'}} onClick={cambiarCamara}>Cambiar camara</Button>
       <ul>
       {
       devices.map((device, key) => (
-              (camera == device.label ? color = "blue" : color="red"),
+              (camera == device.label ? color = "#00AFDC" : color="black"),
               <li value={device.deviceId} style={{color: color}} key={device.label}>{device.label}</li>
             ))}
       </ul>
       </div>
       <div style={{paddingTop:'10px'}}>
-      {( camera === "sin camara seleccionada" ? <div></div> : <Button onClick={onClickHidden} hidden={recomendations}>capturar cedula</Button>)}
+      {( camera === "sin camara seleccionada" ? <div></div> : <Button onClick={onClickHidden}  hidden={recomendations}>capturar cedula</Button>)}
       </div>
-      <Modal title={titulo} visible={isModalVisible} style={{textAlign:'center'}} onOk={onClickModal} onCancel={handleOkandCancel}>
+      <Modal title={titulo} visible={isModalVisible} style={{textAlign:'center', height:'400px'}} onOk={onClickModal} onCancel={handleOkandCancel}>
         <p>{modaltitle}</p>
           {url && (
             <div>
-              <img src={url} alt="Screenshot" width={200}/>
+              <img src={url} alt="Screenshot" style={{WebkitTransform:'rotate(90deg)', padding:'10px'}} width={200}/>
             </div>
           )}
       </Modal>

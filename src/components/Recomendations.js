@@ -14,7 +14,7 @@ const Recomendations = () => {
     }
     
   return (
-      <Carousel style={{width:'200px', height:'400px', backgroundColor:'black', textAlign:'center'}} autoplay={true}>
+      <Carousel style={{width:'200px', height:'350px', backgroundColor:'black', textAlign:'center'}} autoplay={true}>
         <div>
         <Lottie  options={{ loop: true, autoplay: true, animationData: Angulo, rendererSettings: { preserveAspectRatio: 'xMidYMid slice' } }}
         /> 

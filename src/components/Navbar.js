@@ -2,6 +2,7 @@ import { Layout, Menu, Breadcrumb } from 'antd';
 import '../index.css';
 import { UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
 import { NavLink } from 'react-router-dom';
+import logoTOC from '../img/logoTOC.c10ea042.svg'
 const { Header, Content, Footer, Sider } = Layout;
 
 const Navbar = ({ children }) => {
@@ -17,7 +18,7 @@ const Navbar = ({ children }) => {
                     console.log(collapsed, type);
                 }}
             >
-                <div className="logo" />
+                <img src={logoTOC} width={100} style={{padding:'10px'}} />
                 <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']}>
                     <Menu.Item key="1" icon={<UserOutlined />}>
                         <NavLink to="/mvp-react">
