@@ -15,7 +15,7 @@ const AppRouter = () => {
         <Router>
                 <Navbar>
                 <Switch>
-                    <Route exact path="/home" component={HomePage} />
+                    <Route exact path="/mvp-react" component={HomePage} />
                     <Route exact path="/select_camera" component={SelectCamera} />
                     <Route exact path="/capture_camera" component={CaptureCamera} />
                     <Route exact path="/dispositivos" component={GetDispositivos} />

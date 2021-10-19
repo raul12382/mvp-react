@@ -20,7 +20,7 @@ const Navbar = ({ children }) => {
                 <div className="logo" />
                 <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']}>
                     <Menu.Item key="1" icon={<UserOutlined />}>
-                        <NavLink to="/home">
+                        <NavLink to="/mvp-react">
                             Home
                         </NavLink>
                     </Menu.Item>
