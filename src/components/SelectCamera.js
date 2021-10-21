@@ -1,16 +1,17 @@
 import React, {useCallback, useState, useRef, useEffect} from 'react';
 import Webcam from "react-webcam";
 import UAParser from 'ua-parser-js';
-import { Modal, Button, Select, Col, Tooltip, message, Spin} from "antd"
+import { Modal, Button, Select, Col, Tooltip, message, Spin, Image} from "antd"
 import Recomendations from './Recomendations';
 import axios from 'axios';
 import {Redirect} from 'react-router-dom'
+import Cedula from '../img/cedula.jpg'
 const { Option } = Select;
 
 const WebcamCapture = () => {
   const [deviceId, setDeviceId] = useState({});
   const [devices, setDevices] = useState([]);
-  const [index, setIndex] = useState("selecciona la camera");
+  const [index, setIndex] = useState(null);
   const [camera, setCamera] = useState("sin camara seleccionada");
   const [display, setDisplay] = useState(true);
   const [recomendations, setRecomendations] = useState(false);
@@ -81,6 +82,7 @@ const WebcamCapture = () => {
     setDisplay(true)
     setRecomendations(false)
   }
+  
 
   const handleDevices = useCallback(
     mediaDevices =>
@@ -89,9 +91,9 @@ const WebcamCapture = () => {
   );
   useEffect(
     () => {
-      /* if (os === "Mac OS" || "Windows") {
+      if (os === "Mac OS" || "Windows") {
         setIsPc(true)
-      } */
+      } 
       navigator.mediaDevices.enumerateDevices().then(handleDevices);
     },
     [handleDevices]
@@ -117,12 +119,13 @@ const WebcamCapture = () => {
         </label>
       </div>
       <Tooltip placement="right" title={camera}>
-      <Select hidden={recomendations} onChange={handleOnChange}  defaultValue="Selecciona la camara" style={{width:200, textAlign:'center'}}>
+      <Select hidden={recomendations} onChange={handleOnChange}  defaultValue={index} style={{width:200, textAlign:'center'}}>
       {devices.map((device, key) => (
               <Option value={device.deviceId} key={device.label}>{device.label}</Option>
             ))}
       </Select>
-      </Tooltip>
+      </Tooltip> 
+      
       <div style={{paddingTop:'10px'}} hidden={recomendations}>
       <p style={{padding:'5px'}} >Recuerda seguir las siguientes instrucciones para una captura adecuada:</p>
       <Recomendations/>
@@ -133,7 +136,7 @@ const WebcamCapture = () => {
        audio={false} 
        width={'100%'}
        height={'100%'}
-       videoConstraints={{ deviceId:index }} 
+       videoConstraints={{ deviceId: index }} 
        ref={webcamRef}
        onUserMediaError={error => setIsModalVisible(true)}
       screenshotFormat="image/jpeg" 
@@ -147,21 +150,25 @@ const WebcamCapture = () => {
               <li value={device.deviceId} style={{color: color}} key={device.label}>{device.label}</li>
             ))}
       </ul>
+      <div>
+      <label>Recuerda seguir el criterio de calidad indicado por TOC con la siguiente imagen: </label>
+      <Image src={Cedula} width={200}></Image>
+      </div>
       </div>
       <div style={{paddingTop:'10px'}}>
-      {( camera === "sin camara seleccionada" ? <div></div> : <Button onClick={onClickHidden}  hidden={recomendations}>capturar cedula</Button>)}
+      {( camera == "" ? <div></div> : <Button onClick={onClickHidden}  hidden={recomendations}>capturar cedula</Button>)}
       </div>
       <Modal title={titulo} visible={isModalVisible} style={{textAlign:'center', height:'400px'}} onOk={onClickModal} onCancel={handleOkandCancel}>
         <p>{modaltitle}</p>
           {url && (
             <div>
-              <img src={url} alt="Screenshot" style={{WebkitTransform:'rotate(180deg)', padding:'10px'}} width={200}/>
+              <Image src={url} alt="Screenshot" style={{ padding:'10px'}} width={200}/>
             </div>
           )}
       </Modal>
       </Spin>
       {reedirect && (
-          <Redirect to="/" />
+          <Redirect to="/mvp-react" />
         )
       }
     </>

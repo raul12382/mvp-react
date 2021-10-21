@@ -11,7 +11,7 @@ const migration = () => {
         <div style={contentStyle}>
             <h1>Oppss.. las tecnologias de TOC funcionan a traves de un movil</h1>
             <h2>Escanee el codigo QR para su uso adecuado</h2>
-            <QRCode value="https://raul12382.github.io/select_camera/" />
+            <QRCode value="https://raul12382.github.io/mvp-react/" />
         </div>
     )
 }
