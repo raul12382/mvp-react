@@ -1,11 +1,11 @@
 import React, {useCallback, useState, useRef, useEffect} from 'react';
 import Webcam from "react-webcam";
 import UAParser from 'ua-parser-js';
-import { Modal, Button, Select, Col, Tooltip, message, Spin, Image} from "antd"
+import { Modal, Button, Select, Col, Tooltip, message, Spin, Image, Space} from "antd"
 import Recomendations from './Recomendations';
 import axios from 'axios';
 import {Redirect} from 'react-router-dom'
-import Cedula from '../img/cedula.jpg'
+import {ArrowLeftOutlined} from '@ant-design/icons'
 const { Option } = Select;
 
 const WebcamCapture = () => {
@@ -150,19 +150,30 @@ const WebcamCapture = () => {
               <li value={device.deviceId} style={{color: color}} key={device.label}>{device.label}</li>
             ))}
       </ul>
-      <div>
-      <label>Recuerda seguir el criterio de calidad indicado por TOC con la siguiente imagen: </label>
-      <Image src={Cedula} width={200}></Image>
+      <div style={{textAlign:'center'}}>
+      <label>Recuerda seguir el criterio de calidad indicado por TOC con la siguiente imagen de referencia: </label>
+      <div style={{paddingTop:'7px'}}>
+      <Image src="https://raul12382.github.io/MVP-/img/cedula.jpg" width={180}></Image>
       </div>
       </div>
+      </div>
+      
       <div style={{paddingTop:'10px'}}>
       {( camera == "" ? <div></div> : <Button onClick={onClickHidden}  hidden={recomendations}>capturar cedula</Button>)}
       </div>
       <Modal title={titulo} visible={isModalVisible} style={{textAlign:'center', height:'400px'}} onOk={onClickModal} onCancel={handleOkandCancel}>
         <p>{modaltitle}</p>
           {url && (
-            <div>
-              <Image src={url} alt="Screenshot" style={{ padding:'10px'}} width={200}/>
+            
+            <div className="space-align-container">
+              <div className="space-align-block">
+                <Space align="center">
+                  <Image src={url} alt="Screenshot" style={{ padding:'10px'}} width={200}>
+                  </Image>
+                  <ArrowLeftOutlined style={{ fontSize: '30px', alignItems:'center'}} />
+                  Click para más opciones
+                </Space>
+              </div>
             </div>
           )}
       </Modal>
