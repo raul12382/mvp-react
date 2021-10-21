@@ -91,9 +91,9 @@ const WebcamCapture = () => {
   );
   useEffect(
     () => {
-      if (os === "Mac OS" || "Windows") {
+      /* if (os === "Mac OS" || "Windows") {
         setIsPc(true)
-      } 
+      }  */
       navigator.mediaDevices.enumerateDevices().then(handleDevices);
     },
     [handleDevices]
