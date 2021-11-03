@@ -1,13 +1,15 @@
 import {useEffect, useState} from 'react'
-import {Table, Space, Button, Select, Modal, Image} from 'antd'
+import {Table, Space, Button, Select, Modal, Image, Col} from 'antd'
 import axios from 'axios';
 import Item from 'antd/lib/list/Item';
+const { Option } = Select;
 
 
 const GetDispositivos = () => {
   const { Column } = Table;
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [dispositivos, setDispositivos] = useState([])
+  const [modelosUnicos, setModelosUnicos] = useState([])
   const [imagenes, setImagenes] = useState("")
 
 
@@ -45,15 +47,32 @@ const GetDispositivos = () => {
     setIsModalVisible(false);
   };
 
-  useEffect( async() => {
-    const response = await axios.get('http://127.0.0.1:4000/mvp')
+  const handleOnChange = async(value) => {
+    console.log(value);
+    const response = await axios.get(`https://api-devices-mvp.herokuapp.commvp/modelo/${value}`)
     setDispositivos(response.data)
+  };
+
+  const modelos = async () => {
+    const response = await axios.get('https://api-devices-mvp.herokuapp.com/mvp/modelos')
+    setModelosUnicos (response.data)
+  }
+
+  useEffect( async() => {
+    const response = await axios.get('https://api-devices-mvp.herokuapp.com/mvp')
+    setDispositivos(response.data)
+    modelos()
     console.log(dispositivos)
-  }, [setDispositivos])
+  }, [setDispositivos], [setModelosUnicos])
     
   return (
     <>
-    <Table dataSource={columns} style={{minWidth:'300px'}} scroll={{ x: 1000 }}>
+    <Select onChange={handleOnChange}>
+    {modelosUnicos.map((modelo, key) => (
+              <Option value={modelo} key={key}>{modelo}</Option>
+            ))}
+    </Select>
+    <Table dataSource={dispositivos} style={{minWidth:'300px'}} scroll={{ x: 1000 }}>
         <Column title="ID" dataIndex="_id" key="_id"/>
         <Column title="Modelo" dataIndex="modelo" key="modelo" />
         <Column title="Index" dataIndex="index" key="index" />

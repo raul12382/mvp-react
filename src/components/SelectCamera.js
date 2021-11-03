@@ -48,21 +48,14 @@ const WebcamCapture = () => {
     localStorage.setItem("selected", camera )
     document.cookie =`"index=${index};  expires=Thu, 31 Dec 2022 12:00:00 UTC;"`
     document.cookie =`"camera=${camera};  expires=Thu, 31 Dec 2022 12:00:00 UTC;"`
-    try {
-      const response = await axios.post('http://127.0.0.1:4000/mvp/', {
+      const response = await axios.post('https://api-devices-mvp.herokuapp.com/mvp/', {
       index: camera, 
       photo : url, 
       modelo: modelo
     })
     setSpin(false)
-    if (response.data.status == "200"){
       message.success("Data enviada con exito")
       setReedirect(true)
-    } 
-    } catch (error) {
-      setSpin(false)
-      message.error("Ah ocurrido un error, intente de nuevo")
-    }
   };
 
   const onClickHidden = () =>{
