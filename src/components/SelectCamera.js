@@ -48,11 +48,13 @@ const WebcamCapture = () => {
     localStorage.setItem("selected", camera )
     document.cookie =`"index=${index};  expires=Thu, 31 Dec 2022 12:00:00 UTC;"`
     document.cookie =`"camera=${camera};  expires=Thu, 31 Dec 2022 12:00:00 UTC;"`
-      const response = await axios.post('https://api-devices-mvp.herokuapp.com/mvp/', {
+    let mvp = {
       index: camera, 
       photo : url, 
-      modelo: modelo
-    })
+      modelo: (modelo ? modelo : "iphone")
+    }
+    console.log("mvp", mvp)
+    const response = await axios.post('https://api-devices-mvp.herokuapp.com/mvp/', mvp)
     setSpin(false)
       message.success("Data enviada con exito")
       setReedirect(true)

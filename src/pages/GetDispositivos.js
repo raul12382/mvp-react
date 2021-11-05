@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react'
-import {Table, Space, Button, Select, Modal, Image, Col} from 'antd'
+import {Table, Space, Button, Select, Modal, Image, Col, Spin} from 'antd'
 import axios from 'axios';
 import Item from 'antd/lib/list/Item';
 const { Option } = Select;
@@ -10,14 +10,17 @@ const GetDispositivos = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [dispositivos, setDispositivos] = useState([])
   const [modelosUnicos, setModelosUnicos] = useState([])
+  const [spin, setSpin] = useState(false);
   const [imagenes, setImagenes] = useState("")
 
 
   const showModal = async (record) => {
-    /* const response = await axios.get(`http://127.0.0.1:4000/mvp/${record}`)
-    setImagenes(response.data.photo) */
-    setImagenes("https://raul12382.github.io/MVP-/img/cedula.jpg")
+    setSpin(true)
+    const response = await axios.get(`https://api-devices-mvp.herokuapp.com/mvp/${record}`)
+    setImagenes(response.data.photo)
+    //setImagenes("https://raul12382.github.io/MVP-/img/cedula.jpg")
     setIsModalVisible(true)
+    setSpin(false)
     //let imagen = document.getElementById("imagen").parentNode.parentNode
   };
 
@@ -49,8 +52,10 @@ const GetDispositivos = () => {
 
   const handleOnChange = async(value) => {
     console.log(value);
-    const response = await axios.get(`https://api-devices-mvp.herokuapp.commvp/modelo/${value}`)
+    setSpin(true)
+    const response = await axios.get(`https://api-devices-mvp.herokuapp.com/mvp/modelo/${value}`)
     setDispositivos(response.data)
+    setSpin(false)
   };
 
   const modelos = async () => {
@@ -59,14 +64,17 @@ const GetDispositivos = () => {
   }
 
   useEffect( async() => {
+    setSpin(true)
     const response = await axios.get('https://api-devices-mvp.herokuapp.com/mvp')
     setDispositivos(response.data)
     modelos()
     console.log(dispositivos)
+    setSpin(false)
   }, [setDispositivos], [setModelosUnicos])
     
   return (
     <>
+    <Spin spinning={spin} tip="Cargando data..." >
     <Select onChange={handleOnChange}>
     {modelosUnicos.map((modelo, key) => (
               <Option value={modelo} key={key}>{modelo}</Option>
@@ -91,7 +99,7 @@ const GetDispositivos = () => {
           <Image src={imagenes} width={250}></Image>
         )}
       </Modal>
-
+    </Spin>
     </>
   );
 };
