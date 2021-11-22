@@ -18,7 +18,7 @@ const WebcamCapture = () => {
   const [titulo, setTitulo] = useState("Error");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [reedirect, setReedirect] = useState(false);
-  const [spin, setSpin] = useState(false);
+  const [spin, setSpin] = useState("");
   const [isPc, setIsPc] = useState(false);
   const webcamRef = useRef(null);
   const [modaltitle, setModaltitle] = useState("Camara no disponible");
@@ -27,7 +27,6 @@ const WebcamCapture = () => {
   const parser = new UAParser()
   const modelo = parser.getDevice().model
   const os = parser.getOS().name
-  console.log(os)
 
   const capturePhoto = useCallback(async () => {
     const imageSrc = webcamRef.current.getScreenshot();
@@ -86,9 +85,7 @@ const WebcamCapture = () => {
   );
   useEffect(
     () => {
-      /* if (os === "Mac OS" || "Windows") {
-        setIsPc(true)
-      }  */
+      console.log("el", os, modelo)
       navigator.mediaDevices.enumerateDevices().then(handleDevices);
     },
     [handleDevices]
@@ -103,11 +100,14 @@ const WebcamCapture = () => {
 
   return (
     <>
-      {isPc && (
-          <Redirect to="/migration" />
-        )
-      }
       <Spin spinning={spin} tip="Enviando data..." >
+      {/* {
+        os !== "Mac OS" ?  <Redirect to="/migration" ></Redirect> :  "es mobile"
+      } */}
+
+    {
+      os !== "Mac OS" || os !== "Windows"? 
+     <div>
       <div style={{ paddingBottom:'10px'}} hidden={recomendations}>
         <label style={{color:'#00AFDC'}}>
           Seleccione la mejor camara para Autocaptura
@@ -171,8 +171,10 @@ const WebcamCapture = () => {
               </div>
             </div>
           )}
-      </Modal>
-      </Spin>
+      </Modal> 
+      </div>: <Redirect to="/migration" ></Redirect>}
+    </Spin>
+      
       {reedirect && (
           <Redirect to="/mvp-react" />
         )

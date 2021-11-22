@@ -53,7 +53,13 @@ const GetDispositivos = () => {
   const handleOnChange = async(value) => {
     console.log(value);
     setSpin(true)
-    const response = await axios.get(`https://api-devices-mvp.herokuapp.com/mvp/modelo/${value}`)
+    let url = ""
+    if (value == "modelos") {
+      url = 'https://api-devices-mvp.herokuapp.com/mvp'
+    } else {
+      url = `https://api-devices-mvp.herokuapp.com/mvp/modelo/${value}`
+    }
+    const response = await axios.get(url)
     setDispositivos(response.data)
     setSpin(false)
   };
@@ -75,7 +81,8 @@ const GetDispositivos = () => {
   return (
     <>
     <Spin spinning={spin} tip="Cargando data..." >
-    <Select onChange={handleOnChange}>
+    Selecciona el modelo: <Select onChange={handleOnChange} style={{width:'200px', padding:'10px'}} defaultValue={'Selecciona modelo'} > 
+    <Option value={"modelos"}>Ver todos</Option>
     {modelosUnicos.map((modelo, key) => (
               <Option value={modelo} key={key}>{modelo}</Option>
             ))}
