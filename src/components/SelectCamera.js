@@ -106,7 +106,7 @@ const WebcamCapture = () => {
       } */}
 
     {
-      os !== "Mac OS" || os !== "Windows"? 
+      os !== "Mac OS" ? 
      <div>
       <div style={{ paddingBottom:'10px'}} hidden={recomendations}>
         <label style={{color:'#00AFDC'}}>
@@ -172,7 +172,7 @@ const WebcamCapture = () => {
             </div>
           )}
       </Modal> 
-      </div>: <Redirect to="/migration" ></Redirect>}
+      </div> :  <Redirect to="/migration" ></Redirect> }
     </Spin>
       
       {reedirect && (
