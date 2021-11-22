@@ -85,6 +85,8 @@ const WebcamCapture = () => {
   );
   useEffect(
     () => {
+      if( os == "Mac OS" || os == "Windows")
+      setIsPc(true)
       console.log("el", os, modelo)
       navigator.mediaDevices.enumerateDevices().then(handleDevices);
     },
@@ -106,7 +108,7 @@ const WebcamCapture = () => {
       } */}
 
     {
-      os !== "Mac OS" ? 
+      !isPc ? 
      <div>
       <div style={{ paddingBottom:'10px'}} hidden={recomendations}>
         <label style={{color:'#00AFDC'}}>
