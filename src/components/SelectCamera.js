@@ -27,6 +27,11 @@ const WebcamCapture = () => {
   const parser = new UAParser()
   const modelo = parser.getDevice().model
   const os = parser.getOS().name
+  const standalone = window.navigator.standalone
+  const useragent = window.navigator.userAgent.toLowerCase()
+  //const safari = /version/.test(useragent)
+  const ios = /iphone|ipod|ipad/.test(useragent)
+  const android = /android/.test(useragent)
 
   const capturePhoto = useCallback(async () => {
     const imageSrc = webcamRef.current.getScreenshot();
@@ -108,7 +113,7 @@ const WebcamCapture = () => {
       } */}
 
     {
-      !isPc ? 
+      !standalone && ios || android? 
      <div>
       <div style={{ paddingBottom:'10px'}} hidden={recomendations}>
         <label style={{color:'#00AFDC'}}>
